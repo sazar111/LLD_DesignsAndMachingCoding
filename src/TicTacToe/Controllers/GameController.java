@@ -1,9 +1,11 @@
-package Controllers;
+package TicTacToe.Controllers;
 
-import Models.Board;
-import Models.Game;
-import Models.Player;
-import java.util.*;
+import TicTacToe.Models.Board;
+import TicTacToe.Models.Game;
+import TicTacToe.Models.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -27,7 +29,7 @@ public class GameController {
         int size = sc.nextInt();
         Board board = new Board(size);
         board.printBoard();
-        Game game= new Game();
+        Game game = new Game();
         return game;
     }
 }

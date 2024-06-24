@@ -1,19 +1,21 @@
-package Models;
-import Controllers.GameController;
-import Controllers.GameController;
+package TicTacToe.Models;
 
-import java.util.*;
+import TicTacToe.Stratergies.WinningStratergy;
+
+import java.util.List;
+
 public class Game {
     //GameController gameManager;
     List<Player> players;
     Board board;
     List<WinningStratergy> WinningStratergies;
 
-    static class Builder{
+    static class Builder {
         Board board;
         List<Player> players;
         List<WinningStratergy> WinningStratergies;
-        public Builder(){
+
+        public Builder() {
 
         }
     }
