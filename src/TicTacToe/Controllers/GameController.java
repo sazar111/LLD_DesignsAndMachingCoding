@@ -1,13 +1,11 @@
 package TicTacToe.Controllers;
 
-import TicTacToe.Models.Board;
 import TicTacToe.Models.Game;
 import TicTacToe.Models.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 
 public class GameController {
 
@@ -27,9 +25,19 @@ public class GameController {
         System.out.println("Enter Size of the Board");
 
         int size = sc.nextInt();
-        Board board = new Board(size);
-        board.printBoard();
-        Game game = new Game();
-        return game;
+        return Game.getBuilder().setDimension(size).setPlayers(players).build();
+    }
+
+    public void makeMove(Game game){
+        if(!checkAtLeastOneSpace()){
+            System.out.println("Draw");
+            return;
+        }
+        Player currentPlayer= game.getPlayers().get(game.getCurrentPlayer());
+        System.out.printf("Player %s : Please make your move: ",currentPlayer.getName());
+    }
+
+    public boolean checkAtLeastOneSpace(){
+        return true;
     }
 }

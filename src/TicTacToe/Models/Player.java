@@ -8,4 +8,12 @@ public class Player {
         this.Name = Name;
         this.Symbol = Symbol;
     }
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getSymbol() {
+        return Symbol;
+    }
 }
