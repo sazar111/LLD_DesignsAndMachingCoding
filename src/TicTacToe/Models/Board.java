@@ -25,10 +25,18 @@ public class Board {
                 if (cells.get(i).get(j).getPlayer() == null) {
                     System.out.print("|   |");
                 } else {
-                    System.out.printf("| %s |", cells.get(i).get(j).getPlayer());
+                    System.out.printf("| %s |", cells.get(i).get(j).getPlayer().getSymbol());
                 }
             }
             System.out.println(" ");
         }
+    }
+
+    public int getDimensions() {
+        return dimensions;
+    }
+
+    public List<List<Cell>> getCells() {
+        return cells;
     }
 }

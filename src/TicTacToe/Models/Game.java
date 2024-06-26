@@ -1,5 +1,9 @@
 package TicTacToe.Models;
 
+import TicTacToe.Enums.GameState;
+import TicTacToe.Stratergies.ColumnWinningStratergy;
+import TicTacToe.Stratergies.DiagonalWinningStratergy;
+import TicTacToe.Stratergies.RowWinningStratergy;
 import TicTacToe.Stratergies.WinningStratergy;
 
 import java.util.ArrayList;
@@ -13,7 +17,12 @@ public class Game {
     List<Player> players;
     Board board;
     List<WinningStratergy> WinningStratergies;
-    int currentPlayer;
+    int currentPlayerIndex;
+    GameState gameState;
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
 
     public List<Player> getPlayers() {
         return players;
@@ -23,21 +32,29 @@ public class Game {
         return board;
     }
 
-    public int getCurrentPlayer() {
-        return currentPlayer;
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
     }
 
     public List<WinningStratergy> getWinningStratergies() {
         return WinningStratergies;
     }
 
-    private Game(Builder builder){
+    public GameState getGameState() {
+        return gameState;
+    }
 
+    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        this.currentPlayerIndex = currentPlayerIndex;
+    }
+
+    private Game(Builder builder){
+        this.gameState=GameState.IN_PROGRESS;
         validateInputs(builder);
         this.players = builder.players;
         this.WinningStratergies= builder.WinningStratergies;
         this.board= new Board(builder.dimension);
-        this.currentPlayer= 0;
+        this.currentPlayerIndex = 0;
         System.out.println("Game created");
     }
 
@@ -69,7 +86,7 @@ public class Game {
         public Builder() {
             this.dimension = 0;
             this.players = new ArrayList<>();
-            this.WinningStratergies=null;
+            this.WinningStratergies=List.of(new RowWinningStratergy(), new DiagonalWinningStratergy(),new ColumnWinningStratergy());
         }
 
         public Builder setDimension(int dimension) {
