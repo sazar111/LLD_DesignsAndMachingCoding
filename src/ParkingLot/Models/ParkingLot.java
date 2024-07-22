@@ -5,6 +5,17 @@ import java.util.List;
 public class ParkingLot extends BaseModel{
     List<Gate> gates;
     List<ParkingFloor> parkingFloors;
+    LotAssignmentStrategies lotAssignmentStrategies;
+
+    public LotAssignmentStrategies getLotAssignmentStratergy() {
+        return lotAssignmentStrategies;
+    }
+
+    public void setLotAssignmentStratergy(LotAssignmentStrategies lotAssignmentStrategies) {
+        this.lotAssignmentStrategies = lotAssignmentStrategies;
+    }
+
+
 
     public List<Gate> getGates() {
         return gates;
