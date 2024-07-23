@@ -1,6 +1,7 @@
 package ParkingLot.Services;
 
 import ParkingLot.Exceptions.*;
+import ParkingLot.Fatories.ParkingLotAssignmentStrategyFactory;
 import ParkingLot.Models.*;
 import ParkingLot.Repositories.*;
 import ParkingLot.Repositories.VehicleRepository;
@@ -14,11 +15,13 @@ public class TicketService {
     GateRepository gateRepository;
     VehicleRepository vehicleRepository;
     ParkingLotRepository parkingLotRepository;
+    TicketRepository ticketRepository;
 
-    TicketService(GateRepository gateRepository, VehicleRepository vehicleRepository, ParkingLotRepository parkingLotRepository) {
+    TicketService(GateRepository gateRepository, VehicleRepository vehicleRepository, ParkingLotRepository parkingLotRepository, TicketRepository ticketRepository) {
         this.gateRepository= gateRepository;
         this.vehicleRepository= vehicleRepository;
         this.parkingLotRepository= parkingLotRepository;
+        this.ticketRepository= ticketRepository;
     }
 
     public Ticket issueTicket(long gateId, String ownerName, String vehicleNumber, VehicleType vehicletype) {
@@ -43,12 +46,18 @@ public class TicketService {
             throw new ParkingLotNotFoundException("Parking lot not found");
         }
         LotAssignmentStrategies lotStrategy= parkinglot.get().getLotAssignmentStratergy();
+        ParkingLotAssignmentStrategyFactory parkingLotAssignmentStrategyFactory = new ParkingLotAssignmentStrategyFactory();
+        ParkingSlotStratergy strategy= parkingLotAssignmentStrategyFactory.getStrategy(lotStrategy);
+
+        Optional<ParkingSpot> parkingSpotOptional= strategy.getParkingSpot(gate.get(),vehicletype);
+        parkingSpotOptional.orElseThrow(()-> new ParkingLotNotFoundException("No parking spot found"));
 
         Ticket ticket = new Ticket();
         ticket.setGate(gate.get());
         ticket.setEntryTime(new Date());
         ticket.setVehicle(savedVehicle);
-        ticket.setParkingSpot();
-        return ticket;
+        ticket.setParkingSpot(parkingSpotOptional.get());
+
+        return ticketRepository.addTicket(ticket);
     }
 }

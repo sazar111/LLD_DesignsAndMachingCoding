@@ -4,6 +4,8 @@ import ParkingLot.Models.Gate;
 import ParkingLot.Models.ParkingSpot;
 import ParkingLot.Models.VehicleType;
 
+import java.util.Optional;
+
 public interface ParkingSlotStratergy {
-    ParkingSpot getParkingSpot(Gate gate,VehicleType vehicleType);
+    Optional<ParkingSpot> getParkingSpot(Gate gate, VehicleType vehicleType);
 }
